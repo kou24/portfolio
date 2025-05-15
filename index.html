@@ -1,49 +1,133 @@
-<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>映像ポートフォリオ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
       font-family: 'Noto Sans JP', sans-serif;
-      background-color: #fff;
-      color: #111;
-      line-height: 1.6;
+      overflow-x: hidden;
     }
-    header {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-    }
-    header video {
-      position: absolute;
+
+    /* 上部固定の黒帯メニュー */
+    .top-bar {
+      position: fixed;
       top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -1;
+      width: 100%;
+      background-color: #000d49;
+      color: white;
+      z-index: 100;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    header .overlay {
+    .top-bar-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .desktop-menu {
+      display: none;
+    }
+    .desktop-menu a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+    .menu-toggle {
+      font-size: 2rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: block;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 1rem;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+    .menu.show {
+      display: block;
+    }
+    @media screen and (min-width: 768px) {
+      .desktop-menu {
+        display: flex;
+      }
+      .menu-toggle {
+        display: none;
+      }
+      .menu {
+        display: none !important;
+      }
+    }
+
+    #main-visual {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    #main-visual video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.5);
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      color: white;
       text-align: center;
     }
+
+    .overlay h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+    }
+
     section {
-      padding: 4rem 2rem;
-      max-width: 900px;
+      padding: 6rem 2rem 4rem;
+      max-width: 1500px;
       margin: 0 auto;
     }
     h2 {
@@ -53,13 +137,15 @@
     }
     .works {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
     }
     .work-item {
       border: 1px solid #ddd;
       padding: 1rem;
       background-color: #fafafa;
+      text-decoration: none;
+      color: inherit;
     }
     .blog-list a {
       display: block;
@@ -73,53 +159,145 @@
       text-align: center;
       background-color: #f0f0f0;
     }
+    .work-thumbnail {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+    .work-thumbnail iframe,
+    .work-thumbnail img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <video autoplay muted loop playsinline>
-      <source src="your-video.mp4" type="video/mp4" />
-    </video>
-    <div class="overlay">
-      <h1>あなたの名前</h1>
-      <p>映像作家 / ディレクター</p>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="logo">
+        <a href="#top">Voice Over</a>
+      </div>
+      <nav class="desktop-menu">
+        <a href="#about">About</a>
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+      <div class="menu" id="menu">
+        <a href="#about">About</a>
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
-  </header>
+  </div>
 
-  <section id="about">
+  <section id="main-visual">
+    <video src="main-video.mp4" autoplay muted loop playsinline></video>
+    <div class="overlay">
+      <h1>Voice Over</h1>
+    </div>
+  </section>
+  
+  <section id="about" class="section">
     <h2>自己紹介</h2>
-    <p>ここに簡単なプロフィールや経歴を記載します。</p>
+    <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;">
+      
+      <!-- あなたの写真 -->
+      <div style="flex: 1; min-width: 250px; text-align: center;">
+        <img src="me-photo.png" alt="あなたの写真" style="width: 100%; max-width: 300px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+      </div>
+
+      <!-- 自己紹介テキスト -->
+      <div style="flex: 2; min-width: 250px;">
+        <p>
+          私が制作する作品のテーマは<strong>「人間の条件」</strong>である。さらに、そのテーマについて「映画」というメディアを用いて表現していきたい。
+        </p>
+        <p>
+          具体的には、人間は何をもって人間たらしめるのかということについて、人間と人間の関わり合い（ドラマ）の中でその因子を見つけ出すことを目指す。
+        </p>
+        <p>
+          また、私は映画内で登場するキャラクター・登場人物は「作られた人間」であると思う。
+        </p>
+        <p>
+          つまり、人間と非人間の境界を登場人物によって定義することで、より人間を自覚的に捉えることを目指したい。
+        </p>
+      </div>
+
+    </div>
   </section>
 
   <section id="works">
-    <h2>映像作品</h2>
+    <h2>Works</h2>
     <div class="works">
-      <div class="work-item">
-        <h3>作品タイトル</h3>
-        <iframe width="100%" height="200" src="https://www.youtube.com/embed/動画ID" frameborder="0" allowfullscreen></iframe>
-        <p>作品の説明をここに記載します。</p>
-      </div>
-      <!-- 追加作品もこの形式で追加 -->
+      <a href="works/film1.html" class="work-item" style="text-decoration: none; color: inherit;">
+        <div class="work-thumbnail">
+          <img src="thumbnail1.jpeg" alt="雨百合-Rain Lily-">
+        </div>
+        <h3>雨百合-Rain Lily-</h3>
+      </a>
+
+      <a href="works/film2.html" class="work-item" style="text-decoration: none; color: inherit;">
+        <div class="work-thumbnail">
+          <img src="thumbnail2.png" alt="空白恋愛-Blank Love-">
+        </div>
+        <h3>空白恋愛-Blank Love-</h3>
+      </a>
+
+      <a href="works/film3.html" class="work-item" style="text-decoration: none; color: inherit;">
+        <div class="work-thumbnail">
+          <img src="thumbnail3.png" alt="Re:mote">
+        </div>
+        <h3>Re:mote</h3>
+      </a>
+
+      <a href="works/film4.html" class="work-item" style="text-decoration: none; color: inherit;">
+        <div class="work-thumbnail">
+          <img src="thumbnail4.png" alt="my destiny">
+        </div>
+        <h3>my destiny</h3>
+      </a>
+
+      <a href="works/film5.html" class="work-item" style="text-decoration: none; color: inherit;">
+        <div class="work-thumbnail">
+          <img src="thumbnail5.png" alt="LOOK OUT">
+        </div>
+        <h3>LOOK OUT</h3>
+      </a>
     </div>
   </section>
 
-  <section id="blog">
-    <h2>ブログ</h2>
+  <section id="diary">
+    <h2>制作日記</h2>
     <div class="blog-list">
-      <a href="blog/post1.html">【タイトル】記事タイトル1</a>
-      <a href="blog/post2.html">【タイトル】記事タイトル2</a>
-      <!-- 追加記事リンク -->
+      <a href="diary/post20250516.html">【2025/05/15】短編映画の撮影初日</a>
+      <a href="diary/post20250518.html">【2025/05/10】ロケハンに行ってきた</a>
+      <!-- 新しい記事をここに追加 -->
     </div>
   </section>
 
   <section id="contact">
     <h2>お問い合わせ</h2>
-    <p>メール：<a href="mailto:your@email.com">your@email.com</a></p>
-    <p>SNS：<a href="https://twitter.com/yourhandle" target="_blank">@yourhandle</a></p>
+    <p>メール：<a href="mailto:koushioda24@gmail.com">koushioda24@gmail.com</a></p>
+    <p>X：<a href="https://x.com/koushioda" target="_blank">@koushioda</a></p>
   </section>
 
   <footer>
     <p>&copy; あなたの名前 2025</p>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('show');
+    }
+  </script>
 </body>
 </html>
