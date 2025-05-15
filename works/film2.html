@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Works</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 2rem;
+      line-height: 1.8;
+      background: #fff;
+      color: #111;
+      max-width: 800px;
+      margin: auto;
+    }
+    iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-bottom: 0rem;
+    }
+    a {
+      text-decoration: underline;
+      color: #333;
+    }
+    #credit h2 {
+      font-size: 1.3rem;
+      margin-top: 0rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #credit p {
+      margin-top: -0.5rem;
+      line-height: 1.8;
+    }
+
+    #credit ul {
+      padding-left: 1.0rem;
+    }
+
+    #credit li {
+      margin-bottom: 0.5rem;
+    }
+    .work-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      font-size: 1rem;
+    }
+
+    .nav-link {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.2s;
+    }
+
+    .nav-link:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>空白恋愛-Blank Love-</h1>
+
+  <iframe src="https://www.youtube.com/embed/ANLawqEzBw4" frameborder="0" allowfullscreen></iframe>
+  
+  <section id="credit">
+    <h2>Credit</h2>
+    <p>
+      監督　山田 太郎<br>
+      撮影　佐藤 花子<br>
+      出演　田中 一郎、鈴木 二郎<br>
+      編集　山田 太郎
+    </p>
+  </section>
+  
+  <p>
+    テストテストテストテストテストテストテストテスト<br>
+    テストテストテストテストテストテストテストテストテストテストテストテストテスト
+  </p>
+
+  <div class="work-nav">
+    <a id="prev-link" href="#" class="nav-link">&lt; 前の作品</a>
+    <a href="../index.html" class="nav-link">一覧に戻る</a>
+    <a id="next-link" href="#" class="nav-link">次の作品 &gt;</a>
+  </div>
+
+  <script>
+    // URLから現在の作品番号を抽出
+    const currentPage = window.location.pathname;
+    const match = currentPage.match(/film(\\d+)\\.html$/);
+
+    if (match) {
+      const currentNumber = parseInt(match[1]);
+      const prevNumber = currentNumber - 1;
+      const nextNumber = currentNumber + 1;
+
+      const prevLink = document.getElementById('prev-link');
+      const nextLink = document.getElementById('next-link');
+
+      // 最初の作品より前には戻れない
+      if (prevNumber >= 1) {
+        prevLink.href = `film${prevNumber}.html`;
+      } else {
+        prevLink.style.visibility = 'hidden';
+      }
+
+      // 次の作品が存在するかは適宜調整（例：最大3作品まで）
+      const MAX_FILMS = 5;
+      if (nextNumber <= MAX_FILMS) {
+        nextLink.href = `film${nextNumber}.html`;
+      } else {
+        nextLink.style.visibility = 'hidden';
+      }
+    }
+  </script>
+
+</body>
+</html>
